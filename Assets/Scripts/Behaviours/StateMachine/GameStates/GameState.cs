@@ -1,5 +1,6 @@
 ﻿using Controllers;
 using Helpers;
+using System.Collections.Generic;
 using UI;
 
 namespace Behaviours
@@ -8,22 +9,36 @@ namespace Behaviours
     {
         private CombatController _combatController;
         private EndLevel _endLevel;
+        private DropItems _dropItems;
+
+        private List<ISubscriber> _subscribers;
         public GameState(GameStateController stateController) : base(stateController)
         {
+            _subscribers = new List<ISubscriber>();
             _combatController = new CombatController();
             _endLevel = new EndLevel();
+            _dropItems = new DropItems();
+
+            _subscribers.Add(_endLevel);
+            _subscribers.Add(_dropItems);
         }
 
         public override void EnterState()
         {
-            Services.Instance.LevelController.ServicesObject.LoadLevelGame(0);
+            foreach (var subscriber in _subscribers)
+            {
+                subscriber.Subscribe();
+            }
             ScreenInterface.GetInstance().Execute(ScreenTypes.GameMenu);
             _combatController.StartCombat();
         }
 
         public override void ExitState()
         {
-            Services.Instance.LevelController.ServicesObject.ClearLevelNonPLayer();
+            foreach (var subscriber in _subscribers)
+            {
+                subscriber.UnSubscribe();
+            }
             _combatController.StopCombat();
         }
 
@@ -32,10 +47,6 @@ namespace Behaviours
         }
 
         public override void LogicUpdate()
-        {
-        }
-
-        private void EndState()
         {
         }
     }

@@ -5,7 +5,7 @@
         None,
         Canvas,
         MainMenu,
-        PauseMenu,
+        InventoryMenu,
         GameMenu,
         LoadingScreen
     }

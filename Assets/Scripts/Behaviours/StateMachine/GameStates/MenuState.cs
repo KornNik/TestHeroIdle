@@ -11,13 +11,13 @@ namespace Behaviours
         }
         public override void EnterState()
         {
-            Services.Instance.LevelController.ServicesObject.LoadLevelMenu(0);
+            Services.Instance.LevelLoader.ServicesObject.LoadLevelMenu(0);
             ScreenInterface.GetInstance().Execute(ScreenTypes.MainMenu);
         }
 
         public override void ExitState()
         {
-            Services.Instance.LevelController.ServicesObject.ClearLevelNonPLayer();
+            Services.Instance.LevelLoader.ServicesObject.ClearLevelNonPLayer();
         }
 
         public override void LogicFixedUpdate()

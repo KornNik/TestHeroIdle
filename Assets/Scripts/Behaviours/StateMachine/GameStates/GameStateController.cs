@@ -1,16 +1,15 @@
 ﻿using Helpers;
+using System.Collections.Generic;
 
 namespace Behaviours
 {
     class GameStateController : BaseStateController, IEventListener<ChangeGameStateEvent>
     {
-        private IState _menuState;
-        private IState _pauseState;
-        private IState _gameState;
+        private Dictionary<GameStateType, IState> _states = new Dictionary<GameStateType, IState>(5);
 
         public GameStateController() : base()
         {
-            StartState(MenuState);
+            StartState(GetState(GameStateType.LoadMenuLevelState));
             this.EventStartListening<ChangeGameStateEvent>();
         }
         ~GameStateController()
@@ -18,33 +17,45 @@ namespace Behaviours
             this.EventStopListening<ChangeGameStateEvent>();
         }
 
-        public IState MenuState => _menuState;
-        public IState PauseState => _pauseState;
-        public IState GameState => _gameState;
-
         protected override void InitializeStates()
         {
-            _menuState = new MenuState(this);
-            _pauseState = new PauseState(this);
-            _gameState = new GameState(this);
+            _states.Clear();
+            _states.Add(GameStateType.MenuState, new MenuState(this));
+            _states.Add(GameStateType.InventoryState, new InventoryState(this));
+            _states.Add(GameStateType.GameState, new GameState(this));
+            _states.Add(GameStateType.ExitLevelState, new ExitLevelState(this));
+            _states.Add(GameStateType.LoadGameLevelState, new LoadGameLevelState(this));
+            _states.Add(GameStateType.LoadMenuLevelState, new LoadMenuLevelState(this));
+        }
+
+        private IState GetState(GameStateType gameState)
+        {
+            if (_states.ContainsKey(gameState))
+            {
+                var state = _states[gameState];
+                return state;
+            }
+            return null;
         }
 
         public void OnEventTrigger(ChangeGameStateEvent eventType)
         {
-            switch (eventType.NextGameState)
+            if(eventType.NextGameState == GameStateType.PreviouseState)
             {
-                case GameStateType.None:
-                    throw new System.Exception("State is unknown");
-                case GameStateType.ManuState:
-                    ChangeState(_menuState);
-                    break;
-                case GameStateType.GameState:
-                    ChangeState(_gameState);
-                    break;
-                case GameStateType.PauseState:
-                    ChangeState(_pauseState);
-                    break;
+                ChangeState(_previousState);
+                return;
             }
+            ChangeState(GetState(eventType.NextGameState));
+        }
+
+        public void Subscribe()
+        {
+            this.EventStartListening<ChangeGameStateEvent>();
+        }
+
+        public void Unsubscribe()
+        {
+            this.EventStopListening<ChangeGameStateEvent>();
         }
     }
 }

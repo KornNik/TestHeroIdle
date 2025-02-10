@@ -1,6 +1,6 @@
 ﻿namespace Behaviours
 {
-    abstract class Death
+    abstract class Death: ISubscriber
     {
         private Health _health;
         private UnitEvents _unitEvents;
@@ -11,9 +11,14 @@
             _unitEvents = unit.UnitEvents;
             _health = unit.UnitsAttributes.Health;
             _unit = unit;
+        }
+
+        public void Subscribe()
+        {
             _unitEvents.HealthIsEnd += UnitDie;
         }
-        ~Death()
+
+        public void UnSubscribe()
         {
             _unitEvents.HealthIsEnd -= UnitDie;
         }

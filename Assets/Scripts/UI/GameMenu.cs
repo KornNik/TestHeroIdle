@@ -8,16 +8,19 @@ namespace UI
     {
         [SerializeField] private Button _returnButton;
         [SerializeField] private Button _changeEquipButton;
+        [SerializeField] private Button _inventoryButton;
 
         private void OnEnable()
         {
             _returnButton.onClick.AddListener(OnReturnButton);
             _changeEquipButton.onClick.AddListener(OnChangeEquipButtonDown);
+            _inventoryButton.onClick.AddListener(OnInventoryButtonDown);
         }
         private void OnDisable()
         {
             _returnButton.onClick.RemoveListener(OnReturnButton);
             _changeEquipButton.onClick.RemoveListener(OnChangeEquipButtonDown);
+            _inventoryButton.onClick.RemoveListener(OnInventoryButtonDown);
         }
         public override void Show()
         {
@@ -32,11 +35,15 @@ namespace UI
 
         private void OnReturnButton()
         {
-            ChangeGameStateEvent.Trigger(GameStateType.ManuState);
+            ChangeGameStateEvent.Trigger(GameStateType.MenuState);
         }
         private void OnChangeEquipButtonDown()
         {
             ChangeWeaponEvent.Trigger(ChangeEventType.ButtonDown);
+        }
+        private void OnInventoryButtonDown()
+        {
+            ChangeGameStateEvent.Trigger(GameStateType.InventoryState);
         }
     }
 }

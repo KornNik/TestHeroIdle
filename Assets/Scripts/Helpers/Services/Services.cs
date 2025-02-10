@@ -16,7 +16,7 @@ namespace Helpers
         public Service<SettingsController> SettingsController { get; private set; }
         public Service<TimeController> TimeController { get; private set; }
         public Service<DatasBundle> DatasBundle { get; private set; }
-        public Service<LevelLoader> LevelController { get; private set; }
+        public Service<ILevelLoader> LevelLoader { get; private set; }
         public Service<GameStateBehaviour> GameStateBehavior { get; private set; }
         public Service<Player> Player {  get; private set; }
         public Service<Enemy> Enemy { get; private set; }
@@ -33,7 +33,7 @@ namespace Helpers
             SettingsController = new Service<SettingsController>();
             TimeController = new Service<TimeController>();
             DatasBundle = new Service<DatasBundle>();
-            LevelController = new Service<LevelLoader>();
+            LevelLoader = new Service<ILevelLoader>();
             GameStateBehavior = new Service<GameStateBehaviour>();
             Player = new Service<Player>();
             Enemy = new Service<Enemy>();

@@ -36,8 +36,8 @@ namespace UI
                 case ScreenTypes.MainMenu:
                     _currentWindow = _screenFactory.GetMainMenu();
                     break;
-                case ScreenTypes.PauseMenu:
-                    _currentWindow = _screenFactory.GetPauseMenu();
+                case ScreenTypes.InventoryMenu:
+                    _currentWindow = _screenFactory.GetInventoryMenu();
                     break;
                 default:
                     break;
@@ -60,10 +60,10 @@ namespace UI
                     _screenFactory.GetMainMenu().HideUI += listenerScreen.HideScreen;
                     _screenFactory.GetMainMenu().Hide();
                     break;
-                case ScreenTypes.PauseMenu:
-                    _screenFactory.GetPauseMenu().ShowUI += listenerScreen.ShowScreen;
-                    _screenFactory.GetPauseMenu().HideUI += listenerScreen.HideScreen;
-                    _screenFactory.GetPauseMenu().Hide();
+                case ScreenTypes.InventoryMenu:
+                    _screenFactory.GetInventoryMenu().ShowUI += listenerScreen.ShowScreen;
+                    _screenFactory.GetInventoryMenu().HideUI += listenerScreen.HideScreen;
+                    _screenFactory.GetInventoryMenu().Hide();
                     break;
                 default:
                     break;
@@ -84,10 +84,10 @@ namespace UI
                     _screenFactory.GetMainMenu().HideUI -= listenerScreen.HideScreen;
                     _screenFactory.GetMainMenu().Hide();
                     break;
-                case ScreenTypes.PauseMenu:
-                    _screenFactory.GetPauseMenu().ShowUI -= listenerScreen.ShowScreen;
-                    _screenFactory.GetPauseMenu().HideUI -= listenerScreen.HideScreen;
-                    _screenFactory.GetPauseMenu().Hide();
+                case ScreenTypes.InventoryMenu:
+                    _screenFactory.GetInventoryMenu().ShowUI -= listenerScreen.ShowScreen;
+                    _screenFactory.GetInventoryMenu().HideUI -= listenerScreen.HideScreen;
+                    _screenFactory.GetInventoryMenu().Hide();
                     break;
                 default:
                     break;

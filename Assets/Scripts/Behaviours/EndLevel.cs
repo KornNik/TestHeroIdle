@@ -2,26 +2,32 @@
 
 namespace Behaviours
 {
-    class EndLevel : IEventListener<GameEndEvent>
+    class EndLevel : IEventListener<GameEndEvent>, ISubscriber
     {
         public EndLevel() 
         {
-            this.EventStartListening<GameEndEvent>();
-        }
-        ~EndLevel()
-        {
-            this.EventStopListening<GameEndEvent>();
+           
         }
         public void OnEventTrigger(GameEndEvent eventType)
         {
             if (eventType.EndGameType == EndGameType.PlayerDead)
             {
-                ChangeGameStateEvent.Trigger(GameStateType.ManuState);
+                ChangeGameStateEvent.Trigger(GameStateType.MenuState);
             }
             else if(eventType.EndGameType == EndGameType.EnemyDead)
             {
                 ChangeGameStateEvent.Trigger(GameStateType.GameState);
             }
+        }
+
+        public void Subscribe()
+        {
+            this.EventStartListening<GameEndEvent>();
+        }
+
+        public void UnSubscribe()
+        {
+            this.EventStopListening<GameEndEvent>();
         }
     }
 }

@@ -15,3 +15,6 @@ MonoBehaviour:
   _name: Second
   _levelPrefab: {fileID: 6467456183918682235, guid: eb43a858ac8dd314a87403b926835622, type: 3}
   _levelPosition: {x: 0, y: 0, z: 0}
+  _playerPosition: {x: -3, y: -2, z: 0}
+  _playerRotation: {x: 0, y: 180, z: 0}
+  _enemyPosition: {x: 3, y: -2, z: 0}

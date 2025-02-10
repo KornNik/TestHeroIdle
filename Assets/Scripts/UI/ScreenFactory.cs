@@ -10,7 +10,7 @@ namespace UI
         private Canvas _canvas;
         private GameMenu _gameMenu;
         private MainMenu _mainMenu;
-        private PauseMenu _pauseMenu;
+        private InventoryMenu _pauseMenu;
         private LoadingScreen _loadingScreen;
 
 
@@ -39,11 +39,11 @@ namespace UI
             }
             return _mainMenu;
         }
-        public PauseMenu GetPauseMenu()
+        public InventoryMenu GetInventoryMenu()
         {
             if (_pauseMenu == null)
             {
-                var resources = CustomResources.Load<PauseMenu>(ScreenAssetPath.Screens[ScreenTypes.PauseMenu].Screen);
+                var resources = CustomResources.Load<InventoryMenu>(ScreenAssetPath.Screens[ScreenTypes.InventoryMenu].Screen);
                 _pauseMenu = Object.Instantiate(resources, _canvas.transform.position, Quaternion.identity, _canvas.transform);
             }
             return _pauseMenu;

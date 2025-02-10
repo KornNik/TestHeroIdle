@@ -5,7 +5,7 @@ namespace Controllers
     class SettingsController
     {
         private const int DEFAULT_VSYNC_COUNT = 1;
-        private const int DEFAULT_FRAME_RATE = 60;
+        private const int DEFAULT_FRAME_RATE = 30;
         private const bool DEFAULT_CURSOR_STATE = false;
         private const CursorLockMode DEFAULT_CURSOR_LOCK_MODE = CursorLockMode.Locked;
 
@@ -13,6 +13,7 @@ namespace Controllers
         {
             UnLockedCursor();
             LockedFPS();
+            QualitySettings.SetQualityLevel(0);
         }
         private void LockedFPS()
         {

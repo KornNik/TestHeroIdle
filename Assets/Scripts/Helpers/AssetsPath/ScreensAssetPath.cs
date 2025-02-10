@@ -32,7 +32,7 @@ namespace Helpers.AssetsPath
                 }
             },
             {
-                ScreenTypes.PauseMenu,
+                ScreenTypes.InventoryMenu,
                 new ScreenPath
                 {
                     Screen = StringBuilderExtender.CreateString

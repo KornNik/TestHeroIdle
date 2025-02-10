@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Behaviours
 {
     [RequireComponent(typeof(Animator))]
-    sealed class UnitAnimation : MonoBehaviour
+    sealed class UnitAnimation : MonoBehaviour, ISubscriber
     {
         [SerializeField] private Animator _unitAnimator;
         [SerializeField] private Unit _unitReference;
@@ -66,7 +66,8 @@ namespace Behaviours
         {
             _unitAnimator.SetFloat(_attackSpeedMulty, speedValue);
         }
-        private void Subscribe()
+
+        public void Subscribe()
         {
             _unitReference.UnitEvents.Die += OnUnitDie;
             _unitReference.UnitEvents.Revived += OnUnitRevived;
@@ -74,7 +75,8 @@ namespace Behaviours
             _unitReference.UnitEvents.AttackFinished += OnUnitCancel;
             _unitReference.UnitEvents.WeaponSwap += OnUnitWeaponSwap;
         }
-        private void UnSubscribe()
+
+        public void UnSubscribe()
         {
             _unitReference.UnitEvents.Die -= OnUnitDie;
             _unitReference.UnitEvents.Revived -= OnUnitRevived;

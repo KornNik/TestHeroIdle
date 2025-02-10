@@ -1,4 +1,5 @@
 using Data;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Behaviours
@@ -8,6 +9,7 @@ namespace Behaviours
         [SerializeField] private UnitData _unitData;
         [SerializeField] private UnitAnimation _animation;
         [SerializeField] private UnitSounds _sounds;
+        [SerializeField] private Transform _model;
 
         protected Death _death;
         protected Combat _combat;
@@ -15,8 +17,11 @@ namespace Behaviours
         protected UnitAttributes _unitsAttributes;
         protected UnitStateController _stateController;
 
+        protected List<ISubscriber> _subscribes;
+
         public Death Death => _death;
         public Combat Combat => _combat;
+        public Transform Model => _model;
         public UnitSounds Sounds => _sounds;
         public UnitEvents UnitEvents => _unitEvents;
         public UnitAttributes UnitsAttributes => _unitsAttributes;
@@ -30,6 +35,7 @@ namespace Behaviours
         }
         protected virtual void Awake()
         {
+            _subscribes = new List<ISubscriber>();
             _unitEvents = new UnitEvents();
             _unitsAttributes = new UnitAttributes(this, _unitData);;
             _animation.enabled = true;

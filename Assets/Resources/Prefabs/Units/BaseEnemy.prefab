@@ -71,6 +71,7 @@ MonoBehaviour:
   _unitData: {fileID: 11400000, guid: 76275ec0af8ca03418a5a80588016cc6, type: 2}
   _animation: {fileID: 835168726775326396}
   _sounds: {fileID: 11400000, guid: 8bea6993e3ed72f44a09662fb60442e2, type: 2}
+  _dropItemsData: {fileID: 11400000, guid: 7fc48a4ed0e31a4448910fa438745228, type: 2}
 --- !u!114 &835168726775326396
 MonoBehaviour:
   m_ObjectHideFlags: 0

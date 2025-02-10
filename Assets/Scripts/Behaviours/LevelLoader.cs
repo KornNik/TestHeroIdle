@@ -7,48 +7,40 @@ using Helpers.AssetsPath;
 
 namespace Controllers
 {
-    sealed class LevelLoader : MonoBehaviour
+    sealed class LevelLoader : ILevelLoader
     {
-        [SerializeField] private Transform _playerTransformPosition;
-        [SerializeField] private Transform _enemyTransformPosition;
-        [SerializeField] private Transform _levelVisualTransformPosition;
-
         private Unit _enemy;
         private Unit _player;
         private GameObject _level;
         private LevelData _levelData;
 
-        private void Awake()
-        {
-
-        }
         public void LoadLevelGame(int index)
         {
             ClearLevelNonPLayer();
-            LoadLevelVisuals(index);
+            LoadLevelVisuals();
             LoadEnemy();
         }
         public void LoadLevelMenu(int index)
         {
             ClearLevelNonPLayer();
-            LoadLevelVisuals(index);
+            LoadLevelVisuals();
             LoadPlayer();
         }
         public void ClearLevelFull()
         {
             if (!ReferenceEquals(_level, null))
             {
-                Destroy(_level.gameObject);
+                GameObject.Destroy(_level.gameObject);
                 _level = null;
             }
             if (!ReferenceEquals(_enemy, null))
             {
-                Destroy(_enemy.gameObject);
+                GameObject.Destroy(_enemy.gameObject);
                 _enemy = null;
             }
             if (!ReferenceEquals(_player, null))
             {
-                Destroy(_player.gameObject);
+                GameObject.Destroy(_player.gameObject);
                 _player = null;
             }
         }
@@ -56,20 +48,20 @@ namespace Controllers
         {
             if (!ReferenceEquals(_level, null))
             {
-                Destroy(_level.gameObject);
+                GameObject.Destroy(_level.gameObject);
                 _level = null;
             }
             if (!ReferenceEquals(_enemy, null))
             {
-                Destroy(_enemy.gameObject);
+                GameObject.Destroy(_enemy.gameObject);
                 _enemy = null;
             }
         }
 
-        private void LoadLevelVisuals(int index)
+        private void LoadLevelVisuals()
         {
             _levelData = Services.Instance.DatasBundle.ServicesObject.GetData<LevelsBundle>().GetRandomLevelData();
-            _level = Instantiate(_levelData.GetPrefab(), _levelData.GetLevelPosition(), Quaternion.identity, _levelVisualTransformPosition);
+            _level = GameObject.Instantiate(_levelData.GetPrefab(), _levelData.GetLevelPosition(), Quaternion.identity);
             _level.transform.localPosition = Vector3.zero;
             _level.transform.localRotation = Quaternion.identity;
         }
@@ -83,20 +75,27 @@ namespace Controllers
             if (_player != null) return;
 
             var playerResource = CustomResources.Load<Unit>(ResourcesPathManager.PLAYER_UNIT);
-            _player = Instantiate(playerResource, Vector3.zero, Quaternion.identity, _playerTransformPosition);
-            _player.transform.localPosition = Vector3.zero;
-            _player.transform.localRotation = Quaternion.identity;
+            _player = GameObject.Instantiate(playerResource, Vector3.zero, Quaternion.identity);
+            _player.transform.SetLocalPositionAndRotation(_levelData.GetPlayerPosition(),
+                Quaternion.Euler(_levelData.GetPlayerRotation()));
 
             Services.Instance.Player.SetObject(_player as Player);
         }
         private void LoadEnemy()
         {
             var enemyResource = Services.Instance.DatasBundle.ServicesObject.GetData<EnemiesBundle>().GetRandomEnemy();
-            _enemy = Instantiate(enemyResource, _enemyTransformPosition);
-            _enemy.transform.localPosition = Vector3.zero;
+            _enemy = GameObject.Instantiate(enemyResource, Vector3.zero, Quaternion.identity);
+            _enemy.transform.localPosition = _levelData.GetEnemyPosition();
             _enemy.transform.localRotation = Quaternion.identity;
 
             Services.Instance.Enemy.SetObject(_enemy as Enemy);
         }
+    }
+    internal interface ILevelLoader
+    {
+        void LoadLevelGame(int index);
+        void LoadLevelMenu(int index);
+        void ClearLevelFull();
+        void ClearLevelNonPLayer();
     }
 }

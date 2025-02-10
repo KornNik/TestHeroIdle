@@ -2,28 +2,10 @@
 
 namespace Behaviours
 {
-    class AudioEventsHandler : IEventListener<MakeSoundEvent>, IEventListener<MuteSoundEvent>
+    class AudioEventsHandler : IEventListener<MakeSoundEvent>, IEventListener<MuteSoundEvent>, ISubscriber
     {
         public AudioEventsHandler()
         {
-            StartListening();
-        }
-
-        ~AudioEventsHandler()
-        {
-            StopListening();
-        }
-
-        public void StartListening()
-        {
-            this.EventStartListening<MakeSoundEvent>();
-            this.EventStartListening<MuteSoundEvent>();
-        }
-
-        public void StopListening()
-        {
-            this.EventStopListening<MakeSoundEvent>();
-            this.EventStopListening<MuteSoundEvent>();
         }
 
         public void OnEventTrigger(MakeSoundEvent eventType)
@@ -34,6 +16,18 @@ namespace Behaviours
         public void OnEventTrigger(MuteSoundEvent eventType)
         {
             Services.Instance.AudioController.ServicesObject.SetSoundStatus(eventType.MutedInfo.IsMuted);
+        }
+
+        public void Subscribe()
+        {
+            this.EventStartListening<MakeSoundEvent>();
+            this.EventStartListening<MuteSoundEvent>();
+        }
+
+        public void UnSubscribe()
+        {
+            this.EventStopListening<MakeSoundEvent>();
+            this.EventStopListening<MuteSoundEvent>();
         }
     }
 }

@@ -1,70 +1,57 @@
 ﻿using Helpers;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Behaviours
 {
-    struct UnitStateInfo
-    {
-        public float TimeValue;
-        public float TimeLeft;
-        public Sprite StateSprite;
-
-        public UnitStateInfo(float timeValue, float timeLeft, Sprite stateSprite)
-        {
-            TimeValue = timeValue;
-            TimeLeft = timeLeft;
-            StateSprite = stateSprite;
-        }
-    }
-    class UnitStateController : BaseStateController, IEventListener<ChangeUnitStateEvent>
+    class UnitStateController : BaseStateController, IEventListener<ChangeUnitStateEvent>, ISubscriber
     {
         protected Unit _stateObject;
-        protected IState _attackState;
-        protected IState _rechargeState;
-        protected IState _defaultState;
+        protected Dictionary<UnitStateType, IState> _states = new Dictionary<UnitStateType, IState>(3);
 
         public UnitStateController(Unit unitStateObject) : base()
         {
             _stateObject = unitStateObject;
-            StartState(_defaultState);
-            this.EventStartListening<ChangeUnitStateEvent>();
-        }
-        ~UnitStateController()
-        {
-            this.EventStopListening<ChangeUnitStateEvent>();
+            StartState(GetState(UnitStateType.Deafult));
         }
 
         public Unit StateObject => _stateObject;
-        public IState AttackState => _attackState;
-        public IState RechargeState => _rechargeState;
-        public IState DefaultState => _defaultState;
+        public IState AttackState => GetState(UnitStateType.Attack);
+        public IState RechargeState => GetState(UnitStateType.Recharge);
+        public IState DefaultState => GetState(UnitStateType.Deafult);
 
         protected override void InitializeStates()
         {
-            _attackState = new AttackState(this);
-            _rechargeState = new RechargeState(this);
-            _defaultState = new DefaultState(this);
+            _states.Clear();
+            _states.Add(UnitStateType.Deafult, new DefaultState(this));
+            _states.Add(UnitStateType.Attack ,new AttackState(this));
+            _states.Add(UnitStateType.Recharge, new RechargeState(this));
+        }
+        protected virtual void ChangeStateByType(UnitStateType stateType)
+        {
+            ChangeState(GetState(stateType));
+        }
+        protected IState GetState(UnitStateType stateType)
+        {
+            if (_states.ContainsKey(stateType))
+            {
+                var state = _states[stateType];
+                return state;
+            }
+            return null;
         }
 
         public void OnEventTrigger(ChangeUnitStateEvent eventType)
         {
             ChangeStateByType(eventType.NextUnitState);
         }
-
-        protected virtual void ChangeStateByType(UnitStateType stateType)
+        public void Subscribe()
         {
-            switch (stateType)
-            {
-                case UnitStateType.Attack:
-                    ChangeState(_attackState);
-                    break;
-                case UnitStateType.Recharge:
-                    ChangeState(_rechargeState);
-                    break;
-                case UnitStateType.Deafult:
-                    ChangeState(_defaultState);
-                    break;
-            }
+            this.EventStartListening<ChangeUnitStateEvent>();
+        }
+
+        public void UnSubscribe()
+        {
+            this.EventStopListening<ChangeUnitStateEvent>();
         }
     }
 }

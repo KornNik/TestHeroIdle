@@ -27,7 +27,16 @@ namespace Controllers
             _audioEventsHandler = new AudioEventsHandler();
             _audioMixerMuter = Services.Instance.DatasBundle.ServicesObject.GetData<AudioMixerVolumeMuter>();
         }
-        
+
+        private void OnEnable()
+        {
+            _audioEventsHandler.Subscribe();
+        }
+        private void OnDisable()
+        {
+            _audioEventsHandler.UnSubscribe();
+        }
+
         private void Update()
         {
             if (!_audioSourceBackground.isPlaying && !ReferenceEquals(_audioClip,null))

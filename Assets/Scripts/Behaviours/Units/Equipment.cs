@@ -2,7 +2,7 @@
 
 namespace Behaviours
 {
-    class Equipment : IEventListener<ChangeWeaponEvent>
+    class Equipment : IEventListener<ChangeWeaponEvent>, ISubscriber
     {
         private Weapon _meleeWeapon;
         private Weapon _rangeWeapon;
@@ -17,12 +17,6 @@ namespace Behaviours
             _currentWeapon = _meleeWeapon;
             _spriteData = unit.WeaponsVisual;
             SetVisualsWeapons(_currentWeapon.Type);
-
-            this.EventStartListening<ChangeWeaponEvent>();
-        }
-        ~Equipment() 
-        {
-            this.EventStopListening<ChangeWeaponEvent>();
         }
 
         private void ChangeCurrentWeapon()
@@ -71,6 +65,16 @@ namespace Behaviours
             {
                 ChangeCurrentWeapon();
             }
+        }
+
+        public void Subscribe()
+        {
+            this.EventStartListening<ChangeWeaponEvent>();
+        }
+
+        public void UnSubscribe()
+        {
+            this.EventStopListening<ChangeWeaponEvent>();
         }
     }
 }

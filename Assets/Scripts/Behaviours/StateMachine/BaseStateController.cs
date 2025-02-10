@@ -7,7 +7,6 @@ namespace Behaviours
         protected IState _previousState;
         protected IState _currentState;
 
-
         public BaseStateController()
         {
             InitializeStates();
@@ -17,8 +16,7 @@ namespace Behaviours
 
         protected virtual void StartState(IState startingState)
         {
-            _currentState = startingState;
-            startingState.EnterState();
+            ChangeState(startingState);
         }
 
         public void ChangeState(IState newState)
@@ -33,9 +31,8 @@ namespace Behaviours
             }
             else
             {
-                throw new Exception($"{this} try to access current state that is equal null");
+                _previousState = newState;
             }
-
             _previousState = _currentState;
             _currentState = newState;
             _currentState.EnterState();
