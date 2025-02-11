@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb990c0d4f69674a9496de517ee3436, type: 3}
+  m_Name: ResourcesData
+  m_EditorClassIdentifier: 
+  _cameraPrefab: {fileID: 1309152332432426233, guid: 7998a00cfb5553e4ab4116fa40208f5d, type: 3}
+  _gameStatePrefab: {fileID: 7462832337231848308, guid: 5d6dea1a457761045ad76c64eb767455, type: 3}
+  _enemiesBundle: {fileID: 11400000, guid: d72109588c84bd64f9632524f88f61a5, type: 2}
+  _levelsBundle: {fileID: 11400000, guid: 964a45c24c10e364484133a4be74c56a, type: 2}
+  _playerBundle: {fileID: 11400000, guid: e3702ab58c099d442bdfe1f76b28d686, type: 2}
+  _screensPrefabs:
+    m_keys: 01000000020000000400000003000000
+    m_values:
+    - {fileID: 8460954994891623692, guid: 20a01256c8dea064185f2c0fe2ca5e33, type: 3}
+    - {fileID: 7970510424411973072, guid: 491ad64f4e8cbbf45b359bf5fb6e0c6f, type: 3}
+    - {fileID: 705034182132744932, guid: f9f4f3b8f84a68e478c95d6f6d7cdf40, type: 3}
+    - {fileID: 1490178274036686513, guid: 5c3c67f6a1d72c44681dcc5ce032aba8, type: 3}
+  _audioPrefabs:
+    m_keys: 030000000100000002000000
+    m_values:
+    - {fileID: 4568101515950834475, guid: 882b96383c63526458fe8ea5e79f466d, type: 3}
+    - {fileID: 4071350735295451852, guid: a07c80804ebc4b04ca22c4b2efc3d9da, type: 3}
+    - {fileID: 4934435838340974980, guid: eb0ac2a9f80d769419a44a67b2264a48, type: 3}

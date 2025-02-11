@@ -1,23 +1,25 @@
-﻿using Helpers;
+﻿using Controllers;
+using Helpers;
 
 namespace Behaviours
 {
-    class AudioEventsHandler : IEventListener<MakeSoundEvent>, IEventListener<MuteSoundEvent>, ISubscriber
+    class AudioEventsHandler : IEventListener<MakeSoundEvent>, IEventListener<MuteSoundEvent>, IEventSubscription
     {
-        public AudioEventsHandler()
+        private IAudioPlayer _audioPlayer;
+
+        public AudioEventsHandler(IAudioPlayer audioPlayer)
         {
+            _audioPlayer = audioPlayer;
         }
 
         public void OnEventTrigger(MakeSoundEvent eventType)
         {
-            Services.Instance.AudioController.ServicesObject.PlaySound(eventType.SoundData);
+            _audioPlayer.PlaySound(eventType.SoundData);
         }
-
         public void OnEventTrigger(MuteSoundEvent eventType)
         {
-            Services.Instance.AudioController.ServicesObject.SetSoundStatus(eventType.MutedInfo.IsMuted);
+            _audioPlayer.SetSoundStatus(eventType.MutedInfo.IsMuted);
         }
-
         public void Subscribe()
         {
             this.EventStartListening<MakeSoundEvent>();

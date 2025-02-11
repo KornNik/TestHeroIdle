@@ -6,7 +6,7 @@ namespace Behaviours
     {
         None,
         PlayerDead,
-        EnemyDead
+        RefreshLevel
     }
     struct GameEndEvent
     {

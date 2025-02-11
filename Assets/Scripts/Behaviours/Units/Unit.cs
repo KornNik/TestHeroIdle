@@ -1,5 +1,4 @@
 using Data;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Behaviours
@@ -17,7 +16,7 @@ namespace Behaviours
         protected UnitAttributes _unitsAttributes;
         protected UnitStateController _stateController;
 
-        protected List<ISubscriber> _subscribes;
+        protected EventSubscriptionWraper _eventSubscription;
 
         public Death Death => _death;
         public Combat Combat => _combat;
@@ -27,18 +26,20 @@ namespace Behaviours
         public UnitAttributes UnitsAttributes => _unitsAttributes;
         public UnitStateController StateController => _stateController;
 
-        protected virtual void OnEnable()
-        {
-        }
-        protected virtual void OnDisable()
-        {
-        }
         protected virtual void Awake()
         {
-            _subscribes = new List<ISubscriber>();
+            _eventSubscription = new EventSubscriptionWraper(5);
             _unitEvents = new UnitEvents();
             _unitsAttributes = new UnitAttributes(this, _unitData);;
             _animation.enabled = true;
+        }
+        protected virtual void OnEnable()
+        {
+            _eventSubscription.Subscribe();
+        }
+        protected virtual void OnDisable()
+        {
+            _eventSubscription.UnSubscribe();
         }
         private void Update()
         {

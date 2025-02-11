@@ -2,8 +2,6 @@
 using Data;
 using Helpers;
 using Behaviours;
-using Helpers.Extensions;
-using Helpers.AssetsPath;
 
 namespace Controllers
 {
@@ -13,6 +11,13 @@ namespace Controllers
         private Unit _player;
         private GameObject _level;
         private LevelData _levelData;
+
+        private DataResourcePrefabs _dataPrefabs;
+
+        public LevelLoader()
+        {
+            _dataPrefabs = Services.Instance.DataResourcePrefabs.ServicesObject;
+        }
 
         public void LoadLevelGame(int index)
         {
@@ -60,7 +65,7 @@ namespace Controllers
 
         private void LoadLevelVisuals()
         {
-            _levelData = Services.Instance.DatasBundle.ServicesObject.GetData<LevelsBundle>().GetRandomLevelData();
+            _levelData = _dataPrefabs.GetLevelsBundle().GetRandomLevelData();
             _level = GameObject.Instantiate(_levelData.GetPrefab(), _levelData.GetLevelPosition(), Quaternion.identity);
             _level.transform.localPosition = Vector3.zero;
             _level.transform.localRotation = Quaternion.identity;
@@ -74,7 +79,7 @@ namespace Controllers
         {
             if (_player != null) return;
 
-            var playerResource = CustomResources.Load<Unit>(ResourcesPathManager.PLAYER_UNIT);
+            var playerResource = _dataPrefabs.GetPlayerBundle().GetFirstUnit();
             _player = GameObject.Instantiate(playerResource, Vector3.zero, Quaternion.identity);
             _player.transform.SetLocalPositionAndRotation(_levelData.GetPlayerPosition(),
                 Quaternion.Euler(_levelData.GetPlayerRotation()));
@@ -83,7 +88,7 @@ namespace Controllers
         }
         private void LoadEnemy()
         {
-            var enemyResource = Services.Instance.DatasBundle.ServicesObject.GetData<EnemiesBundle>().GetRandomEnemy();
+            var enemyResource = _dataPrefabs.GetEnemiesBundle().GetRandomEnemy();
             _enemy = GameObject.Instantiate(enemyResource, Vector3.zero, Quaternion.identity);
             _enemy.transform.localPosition = _levelData.GetEnemyPosition();
             _enemy.transform.localRotation = Quaternion.identity;

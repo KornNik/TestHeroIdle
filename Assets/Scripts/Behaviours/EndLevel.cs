@@ -2,7 +2,7 @@
 
 namespace Behaviours
 {
-    class EndLevel : IEventListener<GameEndEvent>, ISubscriber
+    class EndLevel : IEventListener<GameEndEvent>, IEventSubscription
     {
         public EndLevel() 
         {
@@ -12,11 +12,11 @@ namespace Behaviours
         {
             if (eventType.EndGameType == EndGameType.PlayerDead)
             {
-                ChangeGameStateEvent.Trigger(GameStateType.MenuState);
+                ChangeGameStateEvent.Trigger(GameStateType.LoadMenuLevelState);
             }
-            else if(eventType.EndGameType == EndGameType.EnemyDead)
+            else if (eventType.EndGameType == EndGameType.RefreshLevel)
             {
-                ChangeGameStateEvent.Trigger(GameStateType.GameState);
+                ChangeGameStateEvent.Trigger(GameStateType.LoadGameLevelState);
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Helpers;
 using Helpers.Extensions;
-using Helpers.AssetsPath;
+using Data;
 
 namespace UI
 {
@@ -10,22 +10,27 @@ namespace UI
         private Canvas _canvas;
         private GameMenu _gameMenu;
         private MainMenu _mainMenu;
-        private InventoryMenu _pauseMenu;
+        private InventoryMenu _inventoryMenu;
         private LoadingScreen _loadingScreen;
+
+        private DataResourcePrefabs _dataPrefabs;
 
 
         public ScreenFactory()
         {
-            var resources = CustomResources.Load<Canvas>(ScreenAssetPath.Screens[ScreenTypes.Canvas].Screen);
-            _canvas = Object.Instantiate(resources, Vector3.one, Quaternion.identity);
+            _dataPrefabs = Services.Instance.DataResourcePrefabs.ServicesObject;
+
+            var resources = _dataPrefabs.GetScreenPrefab(ScreenTypes.Canvas);
+            _canvas = Object.Instantiate(resources, Vector3.one, Quaternion.identity).GetComponent<Canvas>();
         }
 
         public GameMenu GetGameMenu()
         {
             if (_gameMenu == null)
             {
-                var resources = CustomResources.Load<GameMenu>(ScreenAssetPath.Screens[ScreenTypes.GameMenu].Screen);
-                _gameMenu = Object.Instantiate(resources, _canvas.transform.position, Quaternion.identity, _canvas.transform);
+                var resources = _dataPrefabs.GetScreenPrefab(ScreenTypes.GameMenu);
+                _gameMenu = Object.Instantiate(resources, _canvas.transform.position,
+                    Quaternion.identity, _canvas.transform).GetComponent<GameMenu>();
             }
             return _gameMenu;
         }
@@ -34,26 +39,29 @@ namespace UI
         {
             if (_mainMenu == null)
             {
-                var resources = CustomResources.Load<MainMenu>(ScreenAssetPath.Screens[ScreenTypes.MainMenu].Screen);
-                _mainMenu = Object.Instantiate(resources, _canvas.transform.position, Quaternion.identity, _canvas.transform);
+                var resources = _dataPrefabs.GetScreenPrefab(ScreenTypes.MainMenu);
+                _mainMenu = Object.Instantiate(resources, _canvas.transform.position,
+                    Quaternion.identity, _canvas.transform).GetComponent<MainMenu>();
             }
             return _mainMenu;
         }
         public InventoryMenu GetInventoryMenu()
         {
-            if (_pauseMenu == null)
+            if (_inventoryMenu == null)
             {
-                var resources = CustomResources.Load<InventoryMenu>(ScreenAssetPath.Screens[ScreenTypes.InventoryMenu].Screen);
-                _pauseMenu = Object.Instantiate(resources, _canvas.transform.position, Quaternion.identity, _canvas.transform);
+                var resources = _dataPrefabs.GetScreenPrefab(ScreenTypes.InventoryMenu);
+                _inventoryMenu = Object.Instantiate(resources, _canvas.transform.position,
+                    Quaternion.identity, _canvas.transform).GetComponent<InventoryMenu>();
             }
-            return _pauseMenu;
+            return _inventoryMenu;
         }
         public LoadingScreen GetLoadingScreen()
         {
             if (_loadingScreen == null)
             {
-                var resources = CustomResources.Load<LoadingScreen>(ScreenAssetPath.Screens[ScreenTypes.LoadingScreen].Screen);
-                _loadingScreen = Object.Instantiate(resources, _canvas.transform.position, Quaternion.identity, _canvas.transform);
+                var resources = _dataPrefabs.GetScreenPrefab(ScreenTypes.LoadingScreen);
+                _loadingScreen = Object.Instantiate(resources, _canvas.transform.position,
+                    Quaternion.identity, _canvas.transform).GetComponent<LoadingScreen>();
             }
             return _loadingScreen;
         }

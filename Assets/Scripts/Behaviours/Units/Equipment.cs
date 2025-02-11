@@ -2,7 +2,7 @@
 
 namespace Behaviours
 {
-    class Equipment : IEventListener<ChangeWeaponEvent>, ISubscriber
+    class Equipment : IEventListener<ChangeWeaponEvent>, IEventSubscription
     {
         private Weapon _meleeWeapon;
         private Weapon _rangeWeapon;

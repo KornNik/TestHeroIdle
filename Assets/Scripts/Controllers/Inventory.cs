@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Behaviours
 {
-    sealed class Inventory : IEventListener<InventoryChangeEvent>, ISubscriber
+    sealed class Inventory : IEventListener<InventoryChangeEvent>, IEventSubscription
     {
         private HashSet<Item> _itemsInInventory;
 
         public Inventory()
         {
-            
+            _itemsInInventory = new HashSet<Item>(10);
         }
 
         private void RemoveItem(Item itemToRemove)

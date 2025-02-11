@@ -35,7 +35,7 @@ namespace UI
 
         private void OnReturnButton()
         {
-            ChangeGameStateEvent.Trigger(GameStateType.MenuState);
+            ChangeGameStateEvent.Trigger(GameStateType.LoadMenuLevelState);
         }
         private void OnChangeEquipButtonDown()
         {

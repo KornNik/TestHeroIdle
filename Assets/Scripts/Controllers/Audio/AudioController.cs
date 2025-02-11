@@ -1,48 +1,44 @@
 ﻿using UnityEngine;
 using Behaviours;
 using Helpers;
-using Helpers.AssetsPath;
-using Helpers.Extensions;
 using Data;
 
 namespace Controllers
 {
-    sealed class AudioController : MonoBehaviour
+    sealed class AudioController : MonoBehaviour, IAudioPlayer
     {
-        private AudioSource _audioSourceBackground;
-        private AudioSource _audioSourcePoolablePrefab;
         private AudioMixerVolumeMuter _audioMixerMuter;
 
         private AudioClip _audioClip;
         private AudioSourcePool _audioSourcePool;
         private AudioEventsHandler _audioEventsHandler;
+        private EventSubscriptionWraper _eventSubscription;
 
         public void Awake()
         {
-            _audioSourceBackground = CustomResources.Load<AudioSource>
-                (AudioAssetPath.AudioPath[AudioTypes.BackgroundSourcePrefab]);
-            _audioSourcePoolablePrefab = CustomResources.Load<AudioSource>
-                (AudioAssetPath.AudioPath[AudioTypes.PoolableSourcePrefab]);
-            _audioSourcePool = new AudioSourcePool(_audioSourcePoolablePrefab);
-            _audioEventsHandler = new AudioEventsHandler();
-            _audioMixerMuter = Services.Instance.DatasBundle.ServicesObject.GetData<AudioMixerVolumeMuter>();
+            Initialize();
+            FillSubscriptions();
         }
-
         private void OnEnable()
         {
-            _audioEventsHandler.Subscribe();
+            _eventSubscription.Subscribe();
         }
         private void OnDisable()
         {
-            _audioEventsHandler.UnSubscribe();
+            _eventSubscription.UnSubscribe();
         }
-
-        private void Update()
+        private void Initialize()
         {
-            if (!_audioSourceBackground.isPlaying && !ReferenceEquals(_audioClip,null))
-            {
-                _audioClip = null;
-            }
+            _audioMixerMuter = Services.Instance.DatasBundle.ServicesObject.
+                GetData<AudioMixerVolumeMuter>();
+
+            _audioSourcePool = new AudioSourcePool();
+            _audioEventsHandler = new AudioEventsHandler(this);
+            _eventSubscription = new EventSubscriptionWraper();
+        }
+        private void FillSubscriptions()
+        {
+            _eventSubscription.AddEvent(_audioEventsHandler);
         }
 
         public void PlaySound(SoundEventInfo soudnInfo)
@@ -68,6 +64,11 @@ namespace Controllers
         public bool IsSoundMuted()
         {
             return _audioMixerMuter.Muted;
+        }
+
+        public void PlayBackgroundMusic(AudioClip backgroundMusic)
+        {
+
         }
     }
 }

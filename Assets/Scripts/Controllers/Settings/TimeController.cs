@@ -2,7 +2,7 @@
 
 namespace Controllers
 {
-    class TimeController
+    class TimeController : ITimeController
     {
         private const float DEFAULT_PAUSE_TIME_VALUE = 0f;
         private const float DEFAULT_NORMAL_TIME_VALUE = 1f;
@@ -20,5 +20,15 @@ namespace Controllers
         {
             Time.timeScale = DEFAULT_NORMAL_TIME_VALUE;
         }
+        public void SetTimeValue(float value)
+        {
+            Time.timeScale = value;
+        }
+    }
+    interface ITimeController
+    {
+        public void PauseTime();
+        public void ResumeTime();
+        public void SetTimeValue(float value);
     }
 }

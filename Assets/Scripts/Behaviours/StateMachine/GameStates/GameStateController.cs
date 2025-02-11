@@ -1,5 +1,6 @@
 ﻿using Helpers;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Behaviours
 {
@@ -40,6 +41,7 @@ namespace Behaviours
 
         public void OnEventTrigger(ChangeGameStateEvent eventType)
         {
+            Debug.Log($"Changed to {eventType.NextGameState}");
             if(eventType.NextGameState == GameStateType.PreviouseState)
             {
                 ChangeState(_previousState);

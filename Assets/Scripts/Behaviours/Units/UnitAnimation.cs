@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Behaviours
 {
     [RequireComponent(typeof(Animator))]
-    sealed class UnitAnimation : MonoBehaviour, ISubscriber
+    sealed class UnitAnimation : MonoBehaviour, IEventSubscription
     {
         [SerializeField] private Animator _unitAnimator;
         [SerializeField] private Unit _unitReference;

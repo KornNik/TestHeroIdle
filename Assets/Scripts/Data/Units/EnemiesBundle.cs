@@ -3,7 +3,7 @@ using Behaviours;
 
 namespace Data
 {
-    [CreateAssetMenu(fileName ="EnemiesBundle",menuName ="Data/EnemiesBundle")]
+    [CreateAssetMenu(fileName ="EnemiesBundle",menuName ="Data/Units/EnemiesBundle")]
     class EnemiesBundle : ScriptableObject
     {
         [SerializeField] private Unit[] _enemiesToSpawn;

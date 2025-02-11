@@ -7,7 +7,7 @@ using System;
 
 namespace Controllers
 {
-    sealed class DropItems : IEventListener<ItemDropedEvent>, ISubscriber
+    sealed class DropItems : IEventListener<ItemDropedEvent>, IEventSubscription
     {
         private GameObject _dropedItemObject;
         private UniTask _dropedItemTask;
@@ -15,7 +15,7 @@ namespace Controllers
 
         public DropItems()
         {
-           
+
         }
 
         private void DropItem(Item dropedItem, Vector3 position)
@@ -32,14 +32,15 @@ namespace Controllers
 
         private async UniTask DropItemTask()
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_dropedItemTimerValue), ignoreTimeScale: false);
+            await UniTask.Delay(TimeSpan.FromSeconds(_dropedItemTimerValue));
             ClearItem();
-            await UniTask.Yield();
+            GameEndEvent.Trigger(EndGameType.RefreshLevel);
         }
 
         public void OnEventTrigger(ItemDropedEvent eventType)
         {
-            if (eventType.ItemDropedType == ItemDropedType.Droped)
+            Debug.Log("EventCatch");
+            if (eventType.ItemDropedType == ItemDropedEventType.Droped)
             {
                 DropItem(eventType.Item, eventType.Position);
             }

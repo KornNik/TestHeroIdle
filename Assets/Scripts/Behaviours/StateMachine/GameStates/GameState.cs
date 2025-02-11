@@ -1,6 +1,5 @@
 ﻿using Controllers;
 using Helpers;
-using System.Collections.Generic;
 using UI;
 
 namespace Behaviours
@@ -10,35 +9,30 @@ namespace Behaviours
         private CombatController _combatController;
         private EndLevel _endLevel;
         private DropItems _dropItems;
+        private EventSubscriptionWraper _eventSubscription;
 
-        private List<ISubscriber> _subscribers;
         public GameState(GameStateController stateController) : base(stateController)
         {
-            _subscribers = new List<ISubscriber>();
+            _eventSubscription = new EventSubscriptionWraper(2);
             _combatController = new CombatController();
             _endLevel = new EndLevel();
             _dropItems = new DropItems();
 
-            _subscribers.Add(_endLevel);
-            _subscribers.Add(_dropItems);
+            _eventSubscription.AddEvent(_endLevel);
+            _eventSubscription.AddEvent(_dropItems);
         }
 
         public override void EnterState()
         {
-            foreach (var subscriber in _subscribers)
-            {
-                subscriber.Subscribe();
-            }
             ScreenInterface.GetInstance().Execute(ScreenTypes.GameMenu);
+
+            _eventSubscription.Subscribe();
             _combatController.StartCombat();
         }
 
         public override void ExitState()
         {
-            foreach (var subscriber in _subscribers)
-            {
-                subscriber.UnSubscribe();
-            }
+            _eventSubscription.UnSubscribe();
             _combatController.StopCombat();
         }
 

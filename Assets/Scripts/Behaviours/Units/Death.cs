@@ -1,10 +1,10 @@
 ﻿namespace Behaviours
 {
-    abstract class Death: ISubscriber
+    abstract class Death: IEventSubscription
     {
-        private Health _health;
-        private UnitEvents _unitEvents;
-        private Unit _unit;
+        protected Unit _unit;
+        protected Health _health;
+        protected UnitEvents _unitEvents;
 
         public Death(Unit unit)
         {
@@ -25,13 +25,13 @@
 
         protected virtual void UnitDie()
         {
-            UnitLifeCycleEvent.Trigger(_unit, UnitCycleType.Dead);
             _unitEvents.Die?.Invoke();
+            UnitLifeCycleEvent.Trigger(_unit, UnitCycleType.Dead);
         }
         protected virtual void UnitRevived()
         {
-            UnitLifeCycleEvent.Trigger(_unit, UnitCycleType.Revive);
             _unitEvents.Revived?.Invoke();
+            UnitLifeCycleEvent.Trigger(_unit, UnitCycleType.Revive);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Behaviours
 {
-    class UnitStateController : BaseStateController, IEventListener<ChangeUnitStateEvent>, ISubscriber
+    class UnitStateController : BaseStateController, IEventListener<ChangeUnitStateEvent>, IEventSubscription
     {
         protected Unit _stateObject;
         protected Dictionary<UnitStateType, IState> _states = new Dictionary<UnitStateType, IState>(3);

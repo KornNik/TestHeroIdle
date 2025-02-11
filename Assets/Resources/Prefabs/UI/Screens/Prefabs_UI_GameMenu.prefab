@@ -32,12 +32,11 @@ RectTransform:
   m_Children:
   - {fileID: 4283756727965730862}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.5, y: 0}
+  m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4232570105218693444
 CanvasRenderer:
@@ -94,7 +93,6 @@ RectTransform:
   - {fileID: 9070793638434797540}
   - {fileID: 5977642025601977472}
   m_Father: {fileID: 738585740958270568}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -106,6 +104,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4283756727965730862}
     m_Modifications:
     - target: {fileID: 4204699748760072847, guid: ec23f5eea81525d489874c8d57c3aa28, type: 3}
@@ -201,6 +200,9 @@ PrefabInstance:
       value: Prefabs_UI_Parts_MainButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec23f5eea81525d489874c8d57c3aa28, type: 3}
 --- !u!114 &6705719112239860498 stripped
 MonoBehaviour:
@@ -223,6 +225,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4283756727965730862}
     m_Modifications:
     - target: {fileID: 2034639145490127874, guid: ec23f5eea81525d489874c8d57c3aa28, type: 3}
@@ -350,6 +353,9 @@ PrefabInstance:
       value: Prefabs_UI_Parts_MainButton (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec23f5eea81525d489874c8d57c3aa28, type: 3}
 --- !u!114 &4811057375642331587 stripped
 MonoBehaviour:
@@ -372,6 +378,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4283756727965730862}
     m_Modifications:
     - target: {fileID: 4204699748760072847, guid: ec23f5eea81525d489874c8d57c3aa28, type: 3}
@@ -467,6 +474,9 @@ PrefabInstance:
       value: Prefabs_UI_Parts_MainButton (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec23f5eea81525d489874c8d57c3aa28, type: 3}
 --- !u!224 &5977642025601977472 stripped
 RectTransform:
