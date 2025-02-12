@@ -6,15 +6,15 @@ namespace Behaviours
 {
     sealed class GameState : BaseState
     {
-        private CombatController _combatController;
         private EndLevel _endLevel;
         private DropItems _dropItems;
+        private UnitsGameController _unitsGameController;
         private EventSubscriptionWraper _eventSubscription;
 
         public GameState(GameStateController stateController) : base(stateController)
         {
             _eventSubscription = new EventSubscriptionWraper(2);
-            _combatController = new CombatController();
+            _unitsGameController = new UnitsGameController();
             _endLevel = new EndLevel();
             _dropItems = new DropItems();
 
@@ -25,23 +25,30 @@ namespace Behaviours
         public override void EnterState()
         {
             ScreenInterface.GetInstance().Execute(ScreenTypes.GameMenu);
-
+            _unitsGameController.EnterState();
             _eventSubscription.Subscribe();
-            _combatController.StartCombat();
         }
 
         public override void ExitState()
         {
             _eventSubscription.UnSubscribe();
-            _combatController.StopCombat();
-        }
-
-        public override void LogicFixedUpdate()
-        {
+            _unitsGameController.ExitState();
         }
 
         public override void LogicUpdate()
         {
+            base.LogicUpdate();
+            _unitsGameController.LogicUpdate();
+        }
+        public override void LogicFixedUpdate()
+        {
+            base.LogicFixedUpdate();
+            _unitsGameController.LogicFixedUpdate();
+        }
+        public override void LogicLateUpdate()
+        {
+            base.LogicLateUpdate();
+            _unitsGameController.LogicLateUpdate();
         }
     }
 }

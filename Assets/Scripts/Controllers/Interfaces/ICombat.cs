@@ -1,8 +1,10 @@
-﻿namespace Controllers
+﻿using Behaviours;
+
+namespace Controllers
 {
     interface ICombat
     {
-        void StartCombat();
+        void StartCombat(Unit player, Unit enemy);
         void StopCombat();
     }
 }

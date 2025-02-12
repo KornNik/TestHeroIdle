@@ -21,7 +21,7 @@
         public virtual void LogicUpdate()
         {
         }
-        public void LogicLateUpdate()
+        public virtual void LogicLateUpdate()
         {
         }
     }

@@ -1,13 +1,12 @@
 ﻿using Behaviours;
-using Helpers;
 
 namespace Controllers
 {
     class CombatController : ICombat
     {
-        public void StartCombat()
+        public void StartCombat(Unit player, Unit enemy)
         {
-            SetTargets();
+            SetTargets(player, enemy);
             ChangeUnitStateEvent.Trigger(UnitStateType.Recharge);
         }
 
@@ -16,10 +15,10 @@ namespace Controllers
             ChangeUnitStateEvent.Trigger(UnitStateType.Deafult);
         }
 
-        private void SetTargets()
+        private void SetTargets(Unit player, Unit enemy)
         {
-            Services.Instance.Player.ServicesObject.Combat.SetTarget(Services.Instance.Enemy.ServicesObject);
-            Services.Instance.Enemy.ServicesObject.Combat.SetTarget(Services.Instance.Player.ServicesObject);
+            player.Combat.SetTarget(enemy);
+            enemy.Combat.SetTarget(player);
         }
     }
 }

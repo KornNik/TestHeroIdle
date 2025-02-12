@@ -41,18 +41,6 @@ namespace Behaviours
         {
             _eventSubscription.UnSubscribe();
         }
-        private void Update()
-        {
-            _stateController.Update();
-        }
-        private void FixedUpdate()
-        {
-            _stateController.FixedUpdate();
-        }
-        private void LateUpdate()
-        {
-            _stateController.LateUpdate();
-        }
 
         public void ReceiveDamage(float damage)
         {
